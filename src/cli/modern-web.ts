@@ -275,7 +275,9 @@ async function main() {
     await getLogger().logToolCommand(Date.now() - startTime, success, CommandType.UPDATE);
     if (result.error) {
       console.error("Update failed:", result.error);
+      process.exit(1);
     }
+    process.exit(result.status ?? 0);
   } else if (command === "set-baseline") {
     const normalized = normalizeBaselineTarget(arg);
     if (!normalized) {
@@ -304,7 +306,9 @@ async function main() {
     await getLogger().logToolCommand(Date.now() - startTime, success, CommandType.UNINSTALL);
     if (result.error) {
       console.error("Uninstall failed:", result.error);
+      process.exit(1);
     }
+    process.exit(result.status ?? 0);
   } else {
     console.error(`Unknown command: ${command}`);
     printUsage();
